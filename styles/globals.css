@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Base styles */
+html {
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 246, 248, 250;
+}
+
+/* Prevent pull-to-refresh and improve touch handling */
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  @apply overflow-x-hidden;
+}
+
+/* Improve form elements on mobile */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+  max-width: 100%;
+}
+
+/* Checkbox specific styles to improve accessibility */
+input[type="checkbox"] {
+  @apply h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer;
+}
+
+/* Better touch targets */
+button,
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  min-height: 44px; /* Minimum touch target size */
+  min-width: 44px;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Utility classes for mobile optimization */
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .touch-callout-none {
+    -webkit-touch-callout: none;
+  }
+  
+  .tap-highlight-transparent {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Fix for iOS input shadows but preserve checkboxes */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea {
+  @apply appearance-none;
+}
+
+/* Section Transitions */
+.section-transition {
+  position: relative;
+}
+
+.section-transition::before {
+  content: '';
+  position: absolute;
+  top: -4rem;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9));
+  pointer-events: none;
+}
+
+.section-transition::after {
+  content: '';
+  position: absolute;
+  bottom: -4rem;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.9));
+  pointer-events: none;
+}
+
+/* Ensure proper mobile viewport handling */
+@media screen and (max-width: 640px) {
+  body {
+    @apply min-h-screen;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .fixed-nav-spacing {
+    padding-top: 4rem;
+  }
+  
+  .mobile-nav-content {
+    position: relative;
+    z-index: 40;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  .fixed-nav-spacing {
+    padding-top: 0.75rem;
+  }
+  
+  .mobile-nav-content {
+    position: relative;
+    z-index: 40;
+  }
+}
