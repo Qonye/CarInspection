@@ -72,6 +72,42 @@ export default function PDFPreview({ inspection, theme = 'light' }: PDFPreviewPr
     return baseClasses;
   };
 
+  const renderCarBasics = () => (
+    <div className="mb-6 text-center">
+      <h2 className={`text-lg font-semibold ${getTextColor('heading')} mb-3`}>Vehicle Information</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {inspection.carBasics && [
+          { label: 'Make', value: inspection.carBasics.make },
+          { label: 'Model', value: inspection.carBasics.model },
+          { label: 'Year', value: inspection.carBasics.manufactureYear },
+          { label: 'Engine', value: `${inspection.carBasics.engineSize}cc` },
+          { label: 'Transmission', value: inspection.carBasics.transmission },
+          { label: 'Fuel Type', value: inspection.carBasics.fuel },
+          { label: 'Registration', value: inspection.carBasics.registrationNumber },
+          { label: 'Chassis', value: inspection.carBasics.chassisNumber },
+          { label: 'Engine No.', value: inspection.carBasics.engineNumber },
+        ].map(({ label, value }) => (
+          <div key={label} className={`p-3 rounded-lg ${getBgColor('card')} shadow-sm`}>
+            <p className={`text-xs ${getTextColor('secondary')} mb-1`}>{label}</p>
+            <p className={`text-sm font-medium ${getTextColor('primary')}`}>{value || 'N/A'}</p>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-gray-200">
+        <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-100'} shadow-sm`}>
+          <p className={`text-xs ${getTextColor('secondary')} mb-1`}>Asking Price</p>
+          <p className={`text-sm font-medium text-blue-600`}>{formatCurrency(inspection.carBasics?.askingPrice || 0)}</p>
+        </div>
+        {inspection.carBasics?.tradeInValue > 0 && (
+          <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-green-900' : 'bg-green-100'} shadow-sm`}>
+            <p className={`text-xs ${getTextColor('secondary')} mb-1`}>Trade-in Value</p>
+            <p className={`text-sm font-medium text-green-600`}>{formatCurrency(inspection.carBasics?.tradeInValue || 0)}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className={`${getBgColor('card')} shadow-lg rounded-lg p-4 md:p-8 w-full overflow-hidden ${theme === 'dark' ? 'border border-gray-700' : ''}`}>
       <div className="text-center mb-6">
@@ -80,23 +116,7 @@ export default function PDFPreview({ inspection, theme = 'light' }: PDFPreviewPr
       </div>
 
       {/* Vehicle Basic Information - Preview */}
-      <div className={`mb-6 ${getBgColor('section')} rounded-lg p-4 ${theme === 'dark' ? 'border border-gray-700' : ''}`}>
-        <h2 className={`text-lg font-semibold ${getTextColor('heading')} mb-3`}>Vehicle Overview</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          <div>
-            <p className={`text-xs md:text-sm ${getTextColor('secondary')}`}>Make & Model:</p>
-            <p className={`text-sm md:text-base font-medium ${getTextColor('primary')}`}>{`${inspection.carBasics?.make || 'N/A'} ${inspection.carBasics?.model || ''}`}</p>
-          </div>
-          <div>
-            <p className={`text-xs md:text-sm ${getTextColor('secondary')}`}>Year:</p>
-            <p className={`text-sm md:text-base font-medium ${getTextColor('primary')}`}>{inspection.carBasics?.manufactureYear || 'N/A'}</p>
-          </div>
-          <div>
-            <p className={`text-xs md:text-sm ${getTextColor('secondary')}`}>Price:</p>
-            <p className={`text-sm md:text-base font-medium ${getTextColor('primary')}`}>{formatCurrency(inspection.carBasics?.askingPrice || 0)}</p>
-          </div>
-        </div>
-      </div>
+      {renderCarBasics()}
 
       {/* Key Inspection Results - Snapshot */}
       <div className="mb-6">

@@ -338,6 +338,66 @@ const RatingSection = ({ title, ratings }: { title: string; ratings: any }) => (
   </div>
 );
 
+const renderCarBasics = (inspection: CarInspection) => (
+  <div className="mb-8 text-center">
+    <h2 className="text-2xl font-bold mb-4 text-gray-800">Vehicle Information</h2>
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Make</div>
+        <div className="text-lg">{inspection.carBasics.make}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Model</div>
+        <div className="text-lg">{inspection.carBasics.model}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Year</div>
+        <div className="text-lg">{inspection.carBasics.manufactureYear}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Engine</div>
+        <div className="text-lg">{inspection.carBasics.engineSize}cc</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Transmission</div>
+        <div className="text-lg capitalize">{inspection.carBasics.transmission}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Fuel Type</div>
+        <div className="text-lg capitalize">{inspection.carBasics.fuel}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Registration</div>
+        <div className="text-lg">{inspection.carBasics.registrationNumber}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Chassis Number</div>
+        <div className="text-lg">{inspection.carBasics.chassisNumber}</div>
+      </div>
+      <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="font-medium text-gray-500">Engine Number</div>
+        <div className="text-lg">{inspection.carBasics.engineNumber}</div>
+      </div>
+    </div>
+    <div className="mt-6 flex justify-center gap-8">
+      <div className="p-4 bg-blue-50 rounded-lg">
+        <div className="font-medium text-gray-500">Asking Price</div>
+        <div className="text-xl font-bold text-blue-600">
+          {formatCurrency(inspection.carBasics.askingPrice, inspection.carBasics.currency)}
+        </div>
+      </div>
+      {inspection.carBasics.tradeInValue > 0 && (
+        <div className="p-4 bg-green-50 rounded-lg">
+          <div className="font-medium text-gray-500">Trade-in Value</div>
+          <div className="text-xl font-bold text-green-600">
+            {formatCurrency(inspection.carBasics.tradeInValue, inspection.carBasics.currency)}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
 export default function EnhancedReportGenerator({ inspection, theme = 'light' }: EnhancedReportGeneratorProps) {
   const [averageRatings, setAverageRatings] = useState<Record<string, number>>({});
   const [overallAssessment, setOverallAssessment] = useState<string>('');
@@ -1138,6 +1198,39 @@ export default function EnhancedReportGenerator({ inspection, theme = 'light' }:
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* Value Assessment Section */}
+        <div className="my-8">
+          <h2 className={`text-xl font-bold text-center ${getTextColor('heading')} mb-4`}>Value Assessment</h2>
+          <div className="w-full flex justify-center">
+            <div className="overflow-x-auto max-w-3xl w-full">
+              <table className="w-full border-collapse bg-white">
+                <thead>
+                  <tr className="bg-blue-900">
+                    <th className="px-4 py-2 text-white text-center w-1/3">Parameter</th>
+                    <th className="px-4 py-2 text-white text-center w-1/3">Score</th>
+                    <th className="px-4 py-2 text-white text-center w-1/3">Comment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inspection.valueAssessment?.length ? (
+                    inspection.valueAssessment.map((entry, index) => (
+                      <tr key={index} className="border-b hover:bg-gray-50">
+                        <td className="px-4 py-2 text-center">{entry.parameter}</td>
+                        <td className="px-4 py-2 text-center">{entry.score}</td>
+                        <td className="px-4 py-2 text-center">{entry.comment}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={3} className="px-4 py-2 text-center">No data available</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

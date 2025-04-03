@@ -137,6 +137,7 @@ export default function PhotoUpload({ sectionName, existingPhotos = [], onPhotos
           </p>
         </div>
         <div className="flex space-x-2">
+          {/* Merged single button for upload/capture */}
           <button
             type="button"
             onClick={triggerFileInput}
@@ -146,19 +147,12 @@ export default function PhotoUpload({ sectionName, existingPhotos = [], onPhotos
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            {isLoading ? 'Processing...' : 'Upload Photos'}
-          </button>
-          <button
-            type="button"
-            onClick={triggerFileInput}
-            aria-label="Take photo with camera"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg cursor-pointer hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400"
-            disabled={isLoading || !canAddMorePhotos}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {/* Added camera icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
+            {isLoading ? 'Processing...' : 'Upload / Capture Photo'}
           </button>
           <input
             ref={fileInputRef}

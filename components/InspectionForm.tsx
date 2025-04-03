@@ -196,7 +196,7 @@ export default function InspectionForm() {
     const { name, value } = e.target;
     let processedValue: string | number = value;
     
-    if (['manufactureYear', 'value', 'askingPrice', 'tradeInValue'].includes(name)) {
+    if (['manufactureYear', 'value', 'askingPrice', 'tradeInValue', 'engineSize'].includes(name)) {
       processedValue = value !== '' ? Number(value) : 0;
     }
     
@@ -741,6 +741,23 @@ export default function InspectionForm() {
               <option value="manual">Manual</option>
               <option value="automatic">Automatic</option>
             </select>
+          </div>
+          
+          {/* Add Engine Size (CC) input */}
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-1">
+              Engine Size (CC)
+            </label>
+            <input
+              type="number"
+              name="engineSize"
+              placeholder="e.g. 2000"
+              min="0"
+              max="10000"
+              value={inspection.carBasics?.engineSize || ''}
+              onChange={handleBasicInfoChange}
+              className="w-full border border-background-dark bg-background-default p-2 rounded text-text-primary placeholder-text-light focus:ring-2 focus:ring-primary focus:border-primary"
+            />
           </div>
           
           <div>
