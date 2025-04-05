@@ -580,24 +580,25 @@ export default function EnhancedReportGenerator({ inspection, theme = 'light' }:
       const valueData = [
         ['Asking Price', formatCurrencyValue(inspection.carBasics?.askingPrice)],
         ['Trade-in Value', formatCurrencyValue(inspection.carBasics?.tradeInValue)],
-        ['Market Value', formatCurrencyValue(inspection.carBasics?.askingPrice)] // Changed from value to askingPrice
+        ['Market Value', formatCurrencyValue(inspection.carBasics?.askingPrice)]
       ];
 
-      // Value assessment table
+      // Fix: Adjust table alignment and margins
       autoTable(doc, {
         body: valueData,
         theme: 'grid',
         styles: { 
-          fontSize: 9,  // Reduced font size for better fit
-          cellPadding: 4,
-          halign: 'left',
-          minCellHeight: 10
+          fontSize: 10, // Slightly larger font for better readability
+          cellPadding: 5, // Add padding for better spacing
+          halign: 'center', // Center-align all content
+          valign: 'middle' // Vertically center-align content
         },
         columnStyles: {
-          0: { cellWidth: 90 },  // Increased for item text
-          1: { cellWidth: 80 }   // Increased for values
+          0: { cellWidth: 90 }, // Adjust column width for labels
+          1: { cellWidth: 90 }  // Adjust column width for values
         },
-        margin: { left: 20, right: 20, top: 30 }  // Equal margins for proper centering
+        margin: { left: 60, right: 60 }, // Center the table by increasing left/right margins
+        startY: 50 // Adjust starting Y position for better spacing
       });
       
       // Engine Inspection Section with Checklist
